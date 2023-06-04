@@ -20,7 +20,8 @@ Material:
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: 2000
-  stringTagMap: {}
+  stringTagMap:
+    MotionVector: User
   disabledShaderPasses:
   - TransparentBackface
   m_LockedProperties: 
@@ -135,7 +136,7 @@ Material:
     - _BaseDirtStrength: 0.25
     - _BaseMetallic: 1
     - _BaseMetalness: 1
-    - _BaseNormalStrength: 0.102
+    - _BaseNormalStrength: 0.672
     - _BaseRoughness: 0.5
     - _BaseSmoothnes: 1
     - _BaseSmoothness: 0.761
