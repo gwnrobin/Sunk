@@ -6,8 +6,9 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class FirstPersonController : MonoBehaviour
 {
-    private bool _isMoving = false;
     public bool IsMoving => _isMoving;
+
+    private bool _isMoving = false;
 
     private float _sprintMultiplier = 2f;
     [SerializeField] private float _deceleration = 1f;
