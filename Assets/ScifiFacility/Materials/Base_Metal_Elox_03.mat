@@ -139,7 +139,7 @@ Material:
     - _BaseNormalStrength: 0.672
     - _BaseRoughness: 0.5
     - _BaseSmoothnes: 1
-    - _BaseSmoothness: 0.761
+    - _BaseSmoothness: 0.449
     - _BlendMode: 0
     - _BumpScale: 1
     - _CullMode: 2
