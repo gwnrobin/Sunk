@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,21 +6,20 @@ using UnityEngine.InputSystem;
 
 public class PlayerLookInput : MonoBehaviour
 {
-    private Camera playerCamera;
-    private float cameraRotation;
+    private Camera _playerCamera;
+    private float _cameraRotation;
 
-    private Vector3 origin = new(0, 0.8f, 0);
+    private Vector3 _cameraOrigin = new(0, 0.8f, 0);
 
-    [SerializeField]
-    [Range(1, 5f)]
-    public float mouseSensitivity = 1.5f;
-    [SerializeField]
-    private bool allowLookInput = true;
-    public bool AllowLookInput { get { return allowLookInput; } set { allowLookInput = value; } }
+    [SerializeField] [Range(1, 5f)] private float _mouseSensitivity = 1.5f;
+    private const int SENSITIVITY_DIVIDER = 80;
+    [SerializeField] private bool _allowLookInput = true;
+
+    [SerializeField] private int _maxVerticalRotation = 45;
 
     private void Awake()
     {
-        playerCamera = Camera.main;
+        _playerCamera = Camera.main;
     }
 
     /// <summary>
@@ -27,8 +27,7 @@ public class PlayerLookInput : MonoBehaviour
     /// </summary>
     public void ResetCamPos()
     {
-        playerCamera.transform.localPosition = origin;
-        playerCamera.transform.localRotation = Quaternion.identity;
+        _playerCamera.transform.SetLocalPositionAndRotation(_cameraOrigin, Quaternion.identity);
     }
 
     /// <summary>
@@ -37,15 +36,15 @@ public class PlayerLookInput : MonoBehaviour
     /// <param name="context">Vector2 from mouse input</param>
     public void OnLook(InputAction.CallbackContext context)
     {
-        if (!allowLookInput) return;
+        if (!_allowLookInput) return;
 
         Vector2 input = context.ReadValue<Vector2>();
-        cameraRotation -= input.y * mouseSensitivity / 80 ;
+        _cameraRotation -= input.y * _mouseSensitivity / SENSITIVITY_DIVIDER;
 
-        cameraRotation = Mathf.Clamp(cameraRotation, -90, 90);
+        _cameraRotation = Mathf.Clamp(_cameraRotation, -_maxVerticalRotation, _maxVerticalRotation);
 
-        playerCamera.transform.localRotation = Quaternion.Euler(cameraRotation, 0, 0);
+        _playerCamera.transform.localRotation = Quaternion.Euler(_cameraRotation, 0, 0);
 
-        transform.Rotate(input.x * mouseSensitivity * Vector3.up / 80);
+        transform.Rotate(input.x * _mouseSensitivity * Vector3.up / SENSITIVITY_DIVIDER);
     }
 }

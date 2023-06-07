@@ -33,9 +33,9 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 _velocity;
     public bool IsGrounded => _characterController.isGrounded;
 
-    [SerializeField] private float deceleration = 1f;
+    [SerializeField] private float _deceleration = 1f;
     [SerializeField] private float _movementSpeed = 5;
-    [SerializeField] private float acceleration = .05f;
+    [SerializeField] private float _acceleration = .05f;
 
     private Camera _playerCamera;
 
@@ -101,10 +101,10 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_movementDirection.magnitude <= 0)
         {
-            return Mathf.Lerp(_currentMovement.magnitude, 0, deceleration) * _playerCamera.transform.forward;
+            return Mathf.Lerp(_currentMovement.magnitude, 0, _deceleration) * _currentMovement.normalized;
         }
         Vector3 movement = _movementSpeed * _sprintMultiplier * (_movementDirection.x * transform.right + _movementDirection.z * transform.forward);
-        float wantedSpeed = Mathf.Lerp(_currentMovement.magnitude, movement.magnitude, acceleration);
+        float wantedSpeed = Mathf.Lerp(_currentMovement.magnitude, movement.magnitude, _acceleration);
         return wantedSpeed * movement.normalized;
     }
 
@@ -120,12 +120,8 @@ public class PlayerMovement : MonoBehaviour
     private void ApplyGravity()
     {
         if (IsGrounded)
-        {
             _velocity.y = GROUNDED_GRAVITY;
-        }
         else
-        {
             _velocity += Physics.gravity * Time.deltaTime;
-        }
     }
 }
