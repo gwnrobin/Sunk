@@ -12,6 +12,8 @@ public class PlayerInteract : MonoBehaviour
 
     private RaycastHit _hit;
 
+    private Interactable _currentInteractable;
+
     private void Start()
     {
         _playerCamera = Camera.main.transform;
@@ -30,11 +32,11 @@ public class PlayerInteract : MonoBehaviour
         _interactionText.text = "";
         _hit = default;
 
-        if (Physics.Raycast(_playerCamera.position, _playerCamera.forward, out _hit, _interactRange))
+        if (Physics.Raycast(_playerCamera.position, _playerCamera.forward, out _hit, _interactRange) && (_currentInteractable == null || _hit.collider.gameObject.GetInstanceID() == _currentInteractable.gameObject.GetInstanceID()))
         {
-            if (_hit.collider.TryGetComponent(out Interactable interactable))
+            if (_hit.collider.TryGetComponent(out _currentInteractable))
             {
-                _interactionText.text = interactable.InteractText;
+                _interactionText.text = _currentInteractable.InteractText;
             }
         }
     }
