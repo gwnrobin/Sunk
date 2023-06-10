@@ -14,8 +14,11 @@ public class PlayerInteract : MonoBehaviour
 
     private Interactable _currentInteractable;
 
+    private InventorySystem _inventorySystem;
+
     private void Start()
     {
+        _inventorySystem = GetComponent<InventorySystem>();
         _playerCamera = Camera.main.transform;
     }
 
@@ -35,9 +38,7 @@ public class PlayerInteract : MonoBehaviour
         if (Physics.Raycast(_playerCamera.position, _playerCamera.forward, out _hit, _interactRange) && (_currentInteractable == null || _hit.collider.gameObject.GetInstanceID() == _currentInteractable.gameObject.GetInstanceID()))
         {
             if (_hit.collider.TryGetComponent(out _currentInteractable))
-            {
                 _interactionText.text = _currentInteractable.InteractText;
-            }
         }
     }
 
@@ -49,5 +50,8 @@ public class PlayerInteract : MonoBehaviour
         if (!context.performed || _hit.collider == null) return;
 
         _hit.collider.GetComponent<IInteract>()?.OnInteract();
+
+        if (_hit.collider.TryGetComponent(out Item item))
+            _inventorySystem.Pickup(item);
     }
 }
