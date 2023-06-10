@@ -152,7 +152,7 @@ MonoBehaviour:
     m_Value: 1
   enabled:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0
   enabledTransparent:
     m_OverrideState: 1
     m_Value: 1
@@ -268,17 +268,17 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 2
   rayTracing:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 4
   directLightingStrength:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 0.36
   radius:
     m_OverrideState: 1
-    m_Value: 3
+    m_Value: 5
   spatialBilateralAggressiveness:
     m_OverrideState: 0
     m_Value: 0.15
