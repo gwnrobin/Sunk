@@ -12,7 +12,7 @@ public class CameraShake : MonoBehaviour
     private float shakeDuration = 0.5f;
 
     // The original position of the camera
-    Vector3 originalPos;
+    public Vector3 originalPos;
 
     public void Shake()
     {

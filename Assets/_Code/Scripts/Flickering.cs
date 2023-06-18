@@ -9,6 +9,8 @@ public class Flickering : MonoBehaviour
 
     private float timeDelay;
 
+    public float times = 0;
+
     public void StartFlickering(float amount)
     {
         StartCoroutine(Flicker(amount));
@@ -16,7 +18,6 @@ public class Flickering : MonoBehaviour
 
     public IEnumerator Flicker(float amount)
     {
-        float times = 0;
         while (times < amount)
         {
             FlickerOn?.Invoke();
@@ -27,5 +28,6 @@ public class Flickering : MonoBehaviour
             yield return new WaitForSeconds(timeDelay);
             times++;
         }
+        times = 0;
     }
 }
