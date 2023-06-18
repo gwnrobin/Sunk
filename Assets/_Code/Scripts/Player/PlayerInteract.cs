@@ -5,15 +5,11 @@ using static UnityEngine.InputSystem.InputAction;
 public class PlayerInteract : MonoBehaviour
 {
     [SerializeField] private TMP_Text _interactionText;
-
     [SerializeField] private int _interactRange = 3;
 
     private Transform _playerCamera;
-
     private RaycastHit _hit;
-
     private Interactable _currentInteractable;
-
     private InventorySystem _inventorySystem;
 
     private void Start()
@@ -47,7 +43,8 @@ public class PlayerInteract : MonoBehaviour
     /// </summary>
     public void Interact(CallbackContext context)
     {
-        if (!context.performed || _hit.collider == null) return;
+        if (!context.performed || _hit.collider == null) 
+            return;
 
         _hit.collider.GetComponent<IInteract>()?.OnInteract();
 
