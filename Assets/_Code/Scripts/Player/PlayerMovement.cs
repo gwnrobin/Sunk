@@ -51,13 +51,13 @@ public class PlayerMovement : MonoBehaviour
         _characterController = GetComponent<CharacterController>();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         HandleJump();
         HandleMovement();
         ApplyGravity();
 
-        _characterController.Move((_velocity + _velocityY * transform.up) * Time.fixedDeltaTime);
+        _characterController.Move((_velocity + (_velocityY * transform.up)) * Time.deltaTime);
 
         _velocityY = _characterController.velocity.y;
         _velocity = new Vector3(_characterController.velocity.x, 0, _characterController.velocity.z);
