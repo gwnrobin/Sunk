@@ -7,7 +7,7 @@ using static UnityEngine.InputSystem.InputAction;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
-    public bool IsGrounded => _characterController.isGrounded;
+    private bool IsGrounded => _characterController.isGrounded;
 
     [SerializeField] private float _floorDrag = .2f;
     [SerializeField] private float _airDrag = .05f;
@@ -88,7 +88,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleJump()
     {
-        if (!IsGrounded || !_isJumpPressed) 
+        if (!IsGrounded || !_isJumpPressed)
             return;
 
         _isJumpPressed = false;
