@@ -191,7 +191,7 @@ Material:
     - _EnableFogOnTransparent: 1
     - _EnableGeometricSpecularAA: 0
     - _EnergyConservingSpecularColor: 1
-    - _Fill: 28.5
+    - _Fill: 28.101
     - _FresnelPower: 2
     - _HeightAmplitude: 0.02
     - _HeightCenter: 0.5
@@ -264,6 +264,8 @@ Material:
     - _UVEmissive: 0
     - _UseEmissiveIntensity: 0
     - _UseShadowThreshold: 0
+    - _WobbleX: 0
+    - _WobbleZ: 0
     - _ZTestDepthEqualForOpaque: 3
     - _ZTestGBuffer: 3
     - _ZTestTransparent: 4

@@ -10,22 +10,38 @@ public class InventorySystem : MonoBehaviour
 
     private int _currentIndex = 0;
 
-    private Item _currentItem
+    public Item CurrentItem
     {
         get { return _inventory[_currentIndex]; }
-        set { _inventory[_currentIndex] = value; }
+        private set { _inventory[_currentIndex] = value; }
     }
 
-    [SerializeField] Transform _hand;
+    [SerializeField] private Transform _hand;
 
     private void Awake()
     {
         _inventory = new Item[_inventorySize];
     }
 
+    public Item UseCurrentItem()
+    {
+        if (CurrentItem == null)
+            return null;
+
+        Item tempCurrentItem = CurrentItem;
+
+        if(tempCurrentItem.OneTimeuse)
+        {
+            RemoveFromInventory();
+            tempCurrentItem.gameObject.SetActive(false);
+        }
+
+        return tempCurrentItem;
+    }
+
     public void Pickup(Item newItem)
     {
-        if (_currentItem != null)
+        if (CurrentItem != null)
         {
             for (int slot = 0; slot < _inventory.Length; slot++)
             {
@@ -34,7 +50,9 @@ public class InventorySystem : MonoBehaviour
                     PickupItem(newItem, slot);
                 }
                 else
+                {
                     Replace(newItem);
+                }
             }
         }
         else
@@ -49,21 +67,27 @@ public class InventorySystem : MonoBehaviour
         _currentIndex = slot;
         newItem.transform.SetParent(_hand);
         newItem.transform.localPosition = Vector3.zero;
-        _currentItem.Pickup();
+        CurrentItem.Pickup();
     }
 
     public void DropCurrentItem()
     {
-        if (_currentItem == null)
+        if (CurrentItem == null)
             return;
 
-        _currentItem.Drop();
+        CurrentItem.Drop();
+        CurrentItem.Rigidbody.AddForce(transform.forward * 150);
+        RemoveFromInventory();
+    }
+
+    public void RemoveFromInventory()
+    {
         _inventory[_currentIndex] = null;
     }
 
     public void Replace(Item newItem)
     {
-        _currentItem.Drop();
+        CurrentItem.Drop();
         _inventory[_currentIndex] = null;
 
         PickupItem(newItem, _currentIndex);

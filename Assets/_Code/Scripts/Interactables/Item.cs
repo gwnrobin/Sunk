@@ -6,13 +6,13 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class Item : Interactable
 {
+    public Rigidbody Rigidbody => _rb;
+    public bool OneTimeuse => _oneTimeuse;
+
+    [SerializeField] private bool _oneTimeuse;
+
     private Rigidbody _rb;
     private Collider _col;
-
-    [Header("Throwing")]
-    [SerializeField] private int _throwForce = 150;
-    [SerializeField] private Vector2 _throwingAngleMultiplier = new(.5f, 1);
-    private Vector2 ThrowingAngle => transform.forward * _throwingAngleMultiplier.x + transform.up * _throwingAngleMultiplier.y;
 
     private void Awake()
     {
@@ -32,8 +32,6 @@ public class Item : Interactable
 
         _rb.isKinematic = false;
         _col.enabled = true;
-
-        _rb.AddForce(ThrowingAngle * _throwForce);
     }
 
     public override void OnInteract()

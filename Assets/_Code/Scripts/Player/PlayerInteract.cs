@@ -9,7 +9,7 @@ public class PlayerInteract : MonoBehaviour
 
     private Transform _playerCamera;
     private RaycastHit _hit;
-    private Interactable _currentInteractable;
+    private InteractableBase _currentInteractable;
     private InventorySystem _inventorySystem;
 
     private void Start()
@@ -31,10 +31,15 @@ public class PlayerInteract : MonoBehaviour
         _interactionText.text = "";
         _hit = default;
 
-        if (Physics.Raycast(_playerCamera.position, _playerCamera.forward, out _hit, _interactRange) && (_currentInteractable == null || _hit.collider.gameObject.GetInstanceID() == _currentInteractable.gameObject.GetInstanceID()))
+        if (Physics.Raycast(_playerCamera.position, _playerCamera.forward, out _hit, _interactRange) && (_currentInteractable == null || (_hit.collider.gameObject.GetInstanceID() == _currentInteractable.gameObject.GetInstanceID())))
         {
+            print(_hit.collider.name);
             if (_hit.collider.TryGetComponent(out _currentInteractable))
                 _interactionText.text = _currentInteractable.InteractText;
+        }
+        else
+        {
+            _currentInteractable = null;
         }
     }
 
@@ -49,6 +54,18 @@ public class PlayerInteract : MonoBehaviour
         _hit.collider.GetComponent<IInteract>()?.OnInteract();
 
         if (_hit.collider.TryGetComponent(out Item item))
+        {
             _inventorySystem.Pickup(item);
+        }
+
+        if(_hit.collider.TryGetComponent(out InteractableRequireItem requireItemInteractable))
+        {
+            Item i = _inventorySystem.UseCurrentItem();
+
+            if (i != null)
+            {
+                requireItemInteractable.OnInteract(i);
+            }
+        }
     }
 }
